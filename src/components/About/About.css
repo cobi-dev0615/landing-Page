@@ -1,0 +1,24 @@
+.about {
+  background-color: var(--color-graphite);
+  position: relative;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-text {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  line-height: 2;
+  color: var(--color-light-gray);
+  font-style: italic;
+  padding: var(--spacing-md) 0;
+}
+
+@media (max-width: 768px) {
+  .about-text {
+    line-height: 1.8;
+  }
+}
