@@ -1,17 +1,36 @@
 import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Hero from './components/Hero/Hero'
 import About from './components/About/About'
 import Book from './components/Book/Book'
 import StoryForm from './components/StoryForm/StoryForm'
+import Footer from './components/Footer/Footer'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import TermsOfUse from './pages/TermsOfUse'
 
-function App() {
+function Home() {
   return (
-    <div className="app">
+    <>
       <Hero />
       <About />
       <Book />
       <StoryForm />
-    </div>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+          <Route path="/termos-de-uso" element={<TermsOfUse />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 

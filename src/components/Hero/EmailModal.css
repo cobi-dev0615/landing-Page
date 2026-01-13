@@ -30,14 +30,17 @@
   background: none;
   border: none;
   color: var(--color-white);
-  font-size: 2rem;
+  font-size: 2.5rem;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 56px; /* Larger size for better visibility */
+  height: 56px; /* Larger size for better visibility */
+  min-width: 56px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color var(--transition-fast);
+  touch-action: manipulation;
 }
 
 .modal-close:hover {
@@ -78,6 +81,55 @@
   font-size: 1.125rem;
 }
 
+.checkbox-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.checkbox-input {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: var(--color-accent);
+}
+
+.checkbox-text {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+.consent-text {
+  margin-top: var(--spacing-xs);
+  font-size: 0.8rem;
+  color: var(--color-light-gray);
+  line-height: 1.5;
+  padding-left: 28px;
+}
+
+.consent-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.consent-link:hover {
+  color: var(--color-white);
+}
+
 .btn-submit {
   width: 100%;
   margin-top: var(--spacing-sm);
@@ -110,5 +162,17 @@
   
   .modal-title {
     font-size: 1.5rem;
+  }
+  
+  .modal-close {
+    width: 60px; /* Even larger on mobile for better accessibility */
+    height: 60px;
+    min-width: 60px;
+    min-height: 60px;
+    font-size: 2.25rem;
+  }
+  
+  .btn-submit {
+    min-height: 48px; /* Ensure submit button is thumb-friendly */
   }
 }

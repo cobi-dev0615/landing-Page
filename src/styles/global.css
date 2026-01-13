@@ -80,6 +80,8 @@ p {
 .btn {
   display: inline-block;
   padding: 1rem 2.5rem;
+  min-height: 44px; /* Minimum touch target for mobile */
+  min-width: 44px; /* Minimum touch target for mobile */
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
@@ -92,6 +94,7 @@ p {
   cursor: pointer;
   transition: all var(--transition-normal);
   border-radius: 0;
+  touch-action: manipulation; /* Improves touch responsiveness */
 }
 
 .btn:hover {
@@ -164,8 +167,10 @@ label {
   }
   
   .btn {
-    padding: 0.875rem 2rem;
-    font-size: 0.9rem;
+    padding: 1rem 2rem; /* Increased padding for better thumb accessibility */
+    font-size: 1rem; /* Maintain readable font size */
+    min-height: 48px; /* Larger touch target on mobile */
+    min-width: 48px;
   }
 }
 

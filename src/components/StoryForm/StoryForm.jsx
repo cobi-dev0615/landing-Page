@@ -46,9 +46,9 @@ const StoryForm = () => {
     <section className="section story-form-section">
       <div className="container">
         <div className="story-form-container">
-          <h2 className="story-form-title">Deixe seu grito de liberdade aqui</h2>
+          <h2 className="story-form-title">Envie seu Relato</h2>
           <p className="story-form-subtitle">
-            Escrever é o primeiro passo para quebrar o feitiço. Deve haver uma opção para total anonimato.
+            Aqui, a privacidade é a prioridade máxima. Você não precisa estar logado para desabafar.
           </p>
 
           {submitStatus === 'success' && (
@@ -65,18 +65,19 @@ const StoryForm = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="story-form">
             <div className="form-group">
-              <label htmlFor="identificationType">Identificação</label>
+              <label htmlFor="identificationType">Tipo de Identificação</label>
               <select
                 id="identificationType"
                 {...register('identificationType', {
                   required: 'Por favor, selecione um tipo de identificação'
                 })}
                 className="form-select"
+                disabled={isSubmitting}
+                defaultValue="realName"
               >
-                <option value="">Selecione uma opção</option>
-                <option value="realName">Nome Real</option>
-                <option value="pseudonym">Pseudônimo</option>
-                <option value="anonymous">Anônimo</option>
+                <option value="realName">Quero usar meu nome real.</option>
+                <option value="pseudonym">Quero usar um pseudônimo.</option>
+                <option value="anonymous">Prefiro ser completamente anônimo.</option>
               </select>
               {errors.identificationType && (
                 <span className="error-message">{errors.identificationType.message}</span>
@@ -85,14 +86,14 @@ const StoryForm = () => {
 
             {identificationType === 'realName' && (
               <div className="form-group">
-                <label htmlFor="name">Seu Nome</label>
+                <label htmlFor="name">Seu Nome/Nickname</label>
                 <input
                   type="text"
                   id="name"
                   {...register('name', {
                     required: 'Nome é obrigatório'
                   })}
-                  placeholder="Digite seu nome real"
+                  placeholder="Digite seu nome ou como deseja ser chamado"
                   disabled={isSubmitting}
                 />
                 {errors.name && (
@@ -103,14 +104,14 @@ const StoryForm = () => {
 
             {identificationType === 'pseudonym' && (
               <div className="form-group">
-                <label htmlFor="pseudonym">Seu Pseudônimo</label>
+                <label htmlFor="pseudonym">Seu Nome/Nickname</label>
                 <input
                   type="text"
                   id="pseudonym"
                   {...register('pseudonym', {
-                    required: 'Pseudônimo é obrigatório'
+                    required: 'Apelido/Pseudônimo é obrigatório'
                   })}
-                  placeholder="Digite um pseudônimo"
+                  placeholder="Digite seu apelido ou pseudônimo"
                   disabled={isSubmitting}
                 />
                 {errors.pseudonym && (
@@ -120,14 +121,14 @@ const StoryForm = () => {
             )}
 
             <div className="form-group">
-              <label htmlFor="story">Sua História</label>
+              <label htmlFor="story">Seu Relato</label>
               <textarea
                 id="story"
                 {...register('story', {
-                  required: 'Por favor, compartilhe sua história',
+                  required: 'Por favor, compartilhe seu relato',
                   minLength: {
                     value: 50,
-                    message: 'Sua história deve ter pelo menos 50 caracteres'
+                    message: 'Seu relato deve ter pelo menos 50 caracteres'
                   }
                 })}
                 placeholder="Compartilhe sua experiência, sua luta, seu caminho para a liberdade..."
@@ -140,9 +141,10 @@ const StoryForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">
-                Email <span className="optional-label">(Opcional - para suporte/notícias)</span>
-              </label>
+              <label htmlFor="email">Email</label>
+              <p className="email-help-text">
+                Preencha apenas se desejar receber uma resposta ou notícias. Caso contrário, deixe em branco para total anonimato.
+              </p>
               <input
                 type="email"
                 id="email"
@@ -165,7 +167,7 @@ const StoryForm = () => {
               className="btn btn-submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Enviando...' : 'Enviar Sua História'}
+              {isSubmitting ? 'Enviando...' : 'Enviar Relato'}
             </button>
           </form>
         </div>

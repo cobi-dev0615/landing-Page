@@ -13,7 +13,10 @@ const EmailModal = ({ onClose }) => {
     setSubmitStatus(null)
 
     try {
-      const response = await subscribeForEbook(data.email)
+      const response = await subscribeForEbook({
+        name: data.name,
+        email: data.email
+      })
 
       if (response.success) {
         setSubmitStatus('success')
@@ -49,7 +52,23 @@ const EmailModal = ({ onClose }) => {
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="email-form">
             <div className="form-group">
-              <label htmlFor="email">Endereço de Email</label>
+              <label htmlFor="name">Nome (ou como deseja ser chamado)</label>
+              <input
+                type="text"
+                id="name"
+                {...register('name', {
+                  required: 'Nome é obrigatório'
+                })}
+                placeholder="Seu nome ou como deseja ser chamado"
+                disabled={isSubmitting}
+              />
+              {errors.name && (
+                <span className="error-message">{errors.name.message}</span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
@@ -66,6 +85,36 @@ const EmailModal = ({ onClose }) => {
               {errors.email && (
                 <span className="error-message">{errors.email.message}</span>
               )}
+            </div>
+
+            <div className="form-group checkbox-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  {...register('consent', {
+                    required: 'Você precisa concordar para receber o e-book'
+                  })}
+                  disabled={isSubmitting}
+                  className="checkbox-input"
+                />
+                <span className="checkbox-text">
+                  Concordo em receber conteúdo de apoio deste projeto
+                </span>
+              </label>
+              {errors.consent && (
+                <span className="error-message">{errors.consent.message}</span>
+              )}
+              <p className="consent-text">
+                Ao se cadastrar, você concorda com nossos{' '}
+                <a href="/termos-de-uso" target="_blank" rel="noopener noreferrer" className="consent-link">
+                  Termos de Uso
+                </a>
+                {' '}e{' '}
+                <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer" className="consent-link">
+                  Política de Privacidade
+                </a>
+                .
+              </p>
             </div>
 
             <button
