@@ -104,17 +104,6 @@ const EmailModal = ({ onClose }) => {
               {errors.consent && (
                 <span className="error-message">{errors.consent.message}</span>
               )}
-              <p className="consent-text">
-                Ao se cadastrar, você concorda com nossos{' '}
-                <a href="/termos-de-uso" target="_blank" rel="noopener noreferrer" className="consent-link">
-                  Termos de Uso
-                </a>
-                {' '}e{' '}
-                <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer" className="consent-link">
-                  Política de Privacidade
-                </a>
-                .
-              </p>
             </div>
 
             <button
