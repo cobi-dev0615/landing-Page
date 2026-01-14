@@ -66,9 +66,14 @@ Create a `.env` file in the root directory:
 
 ```
 VITE_API_URL=http://localhost:3001/api
+VITE_WHATSAPP_NUMBER=5511999999999
 ```
 
 **Note**: In Vite, environment variables must be prefixed with `VITE_` to be exposed to the client.
+
+**WhatsApp Configuration:**
+- `VITE_WHATSAPP_NUMBER`: Número do WhatsApp no formato internacional sem o sinal de +
+  - Exemplo para Brasil: `5511999999999` (55 = código do país, 11 = DDD, 999999999 = número)
 
 ### Backend Integration
 

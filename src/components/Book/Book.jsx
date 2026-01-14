@@ -47,7 +47,11 @@ const Book = () => {
           <h3 className="chapters-title">Capítulos</h3>
           <div className="chapters-grid">
             {chapters.map((chapter) => (
-              <ChapterCard key={chapter.number} chapter={chapter} />
+              <ChapterCard 
+                key={chapter.number} 
+                chapter={chapter}
+                image={chapter.number === 4 ? '/images/chapter4.jpeg' : chapter.number === 5 ? '/images/chapter5.jpeg' : null}
+              />
             ))}
           </div>
         </div>

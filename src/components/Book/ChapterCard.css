@@ -34,6 +34,20 @@
   line-height: 1.6;
 }
 
+.chapter-image-wrapper {
+  margin-top: var(--spacing-md);
+  width: 100%;
+}
+
+.chapter-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  object-fit: cover;
+  margin-top: var(--spacing-sm);
+}
+
 @media (max-width: 768px) {
   .chapter-card {
     padding: var(--spacing-sm);

@@ -5,6 +5,7 @@ import About from './components/About/About'
 import Book from './components/Book/Book'
 import StoryForm from './components/StoryForm/StoryForm'
 import Footer from './components/Footer/Footer'
+import WhatsAppButton from './components/WhatsAppButton/WhatsAppButton'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfUse from './pages/TermsOfUse'
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/termos-de-uso" element={<TermsOfUse />} />
         </Routes>
         <Footer />
+        <WhatsAppButton />
       </div>
     </Router>
   )
