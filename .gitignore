@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Media files (if needed to exclude, otherwise remove this line)
+# media/*.pdf

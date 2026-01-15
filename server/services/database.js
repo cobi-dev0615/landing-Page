@@ -13,18 +13,19 @@ const stories = []
 /**
  * Save user subscription
  */
-export async function subscribeUser({ name, email, consent }) {
+export async function subscribeUser({ name, email, phone, consent }) {
   try {
     // TODO: Replace with actual database save
     const subscription = {
       name,
       email,
+      phone,
       consent,
       subscribedAt: new Date().toISOString()
     }
     
     subscriptions.push(subscription)
-    console.log('✅ Subscription saved:', email)
+    console.log('✅ Subscription saved:', email, phone)
     
     // Example: Save to database
     // await db.collection('subscriptions').insertOne(subscription)

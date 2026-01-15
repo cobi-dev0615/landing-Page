@@ -15,7 +15,8 @@ const EmailModal = ({ onClose }) => {
     try {
       const response = await subscribeForEbook({
         name: data.name,
-        email: data.email
+        email: data.email,
+        phone: data.phone
       })
 
       if (response.success) {
@@ -84,6 +85,30 @@ const EmailModal = ({ onClose }) => {
               />
               {errors.email && (
                 <span className="error-message">{errors.email.message}</span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">WhatsApp/Telefone</label>
+              <input
+                type="tel"
+                id="phone"
+                {...register('phone', {
+                  required: 'WhatsApp/Telefone é obrigatório',
+                  pattern: {
+                    value: /^[\d\s\(\)\-\+]+$/,
+                    message: 'Formato de telefone inválido'
+                  },
+                  minLength: {
+                    value: 10,
+                    message: 'Telefone deve ter pelo menos 10 dígitos'
+                  }
+                })}
+                placeholder="(11) 99999-9999"
+                disabled={isSubmitting}
+              />
+              {errors.phone && (
+                <span className="error-message">{errors.phone.message}</span>
               )}
             </div>
 

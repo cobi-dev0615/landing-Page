@@ -1,10 +1,15 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import { sendEbookEmail, sendStoryConfirmation } from './services/brevoService.js'
 import { subscribeUser, saveStory } from './services/database.js'
 
 dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -17,6 +22,24 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Serve ebook.pdf with download headers (force download instead of viewing)
+app.get('/media/ebook.pdf', (req, res) => {
+  const filePath = path.join(__dirname, '../media/ebook.pdf')
+  res.setHeader('Content-Disposition', 'attachment; filename="ebook.pdf"')
+  res.setHeader('Content-Type', 'application/pdf')
+  res.sendFile(filePath)
+})
+
+// Serve other static files from media directory (if any)
+app.use('/media', express.static(path.join(__dirname, '../media'), {
+  setHeaders: (res, filePath) => {
+    // Force download for PDF files
+    if (path.extname(filePath) === '.pdf') {
+      res.setHeader('Content-Disposition', 'attachment')
+    }
+  }
+}))
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'API is running' })
@@ -25,13 +48,13 @@ app.get('/api/health', (req, res) => {
 // Subscribe and send e-book
 app.post('/api/subscribe', async (req, res) => {
   try {
-    const { name, email, consent } = req.body
+    const { name, email, phone, consent } = req.body
 
     // Validation
-    if (!email || !name) {
+    if (!email || !name || !phone) {
       return res.status(400).json({
         success: false,
-        message: 'Nome e email são obrigatórios'
+        message: 'Nome, email e telefone são obrigatórios'
       })
     }
 
@@ -51,11 +74,20 @@ app.post('/api/subscribe', async (req, res) => {
       })
     }
 
+    // Validate phone format (basic validation)
+    const phoneRegex = /^[\d\s\(\)\-\+]{10,}$/
+    if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+      return res.status(400).json({
+        success: false,
+        message: 'Telefone inválido'
+      })
+    }
+
     // Save to database (optional - implement your database logic)
-    await subscribeUser({ name, email, consent })
+    await subscribeUser({ name, email, phone, consent })
 
     // Send e-book via Brevo
-    await sendEbookEmail({ name, email })
+    await sendEbookEmail({ name, email, phone })
 
     res.json({
       success: true,
@@ -146,4 +178,5 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`)
   console.log(`📧 Brevo email service configured`)
   console.log(`🌐 API available at http://localhost:${PORT}/api`)
+  console.log(`📄 E-book available at http://localhost:${PORT}/media/ebook.pdf`)
 })
