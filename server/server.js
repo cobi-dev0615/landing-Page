@@ -49,7 +49,7 @@ app.get('/api/health', (req, res) => {
 app.post('/api/subscribe', async (req, res) => {
   try {
     const { name, email, phone, consent } = req.body
-
+    console.log('req.body', req.body);
     // Validation
     if (!email || !name || !phone) {
       return res.status(400).json({
@@ -58,7 +58,7 @@ app.post('/api/subscribe', async (req, res) => {
       })
     }
 
-    console.log('name', name)
+    console.log('name', name);
 
     if (!consent) {
       return res.status(400).json({
