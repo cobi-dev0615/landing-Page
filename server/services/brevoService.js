@@ -6,11 +6,14 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Brevo API configuration
-const BREVO_API_KEY = process.env.BREVO_API_KEY
 const BREVO_API_URL = 'https://api.brevo.com/v3'
 
-if (!BREVO_API_KEY) {
-  throw new Error('BREVO_API_KEY não configurada no arquivo .env')
+function getBrevoApiKey() {
+  const apiKey = process.env.BREVO_API_KEY
+  if (!apiKey) {
+    throw new Error('BREVO_API_KEY não configurada nas variáveis de ambiente')
+  }
+  return apiKey
 }
 
 /**
@@ -77,11 +80,12 @@ export async function sendEbookEmail({ name, email, phone }) {
     }
 
     // Send email via Brevo API
+    const apiKey = getBrevoApiKey()
     const response = await fetch(`${BREVO_API_URL}/smtp/email`, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
-        'api-key': BREVO_API_KEY,
+        'api-key': apiKey,
         'content-type': 'application/json'
       },
       body: JSON.stringify(emailData)
@@ -195,11 +199,12 @@ Este é um email automático. Por favor, não responda diretamente.
     `
 
     // Send email via Brevo API
+    const apiKey = getBrevoApiKey()
     const response = await fetch(`${BREVO_API_URL}/smtp/email`, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
-        'api-key': BREVO_API_KEY,
+        'api-key': apiKey,
         'content-type': 'application/json'
       },
       body: JSON.stringify(emailData)

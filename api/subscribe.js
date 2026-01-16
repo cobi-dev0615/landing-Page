@@ -64,9 +64,12 @@ export default async function handler(req, res) {
     })
   } catch (error) {
     console.error('Error in /api/subscribe:', error)
+    console.error('Error stack:', error.stack)
+    console.error('Error message:', error.message)
     return res.status(500).json({
       success: false,
-      message: 'Erro ao processar solicitação. Por favor, tente novamente.'
+      message: error.message || 'Erro ao processar solicitação. Por favor, tente novamente.',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     })
   }
 }
