@@ -48,6 +48,7 @@ app.get('/api/health', (req, res) => {
 // Subscribe and send e-book
 app.post('/api/subscribe', async (req, res) => {
   try {
+    console.log("starting subscribe");
     const { name, email, phone, consent } = req.body
     console.log('req.body', req.body);
     // Validation
