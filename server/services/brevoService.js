@@ -19,10 +19,24 @@ if (!BREVO_API_KEY) {
 export async function sendEbookEmail({ name, email, phone }) {
   try {
     // Read PDF file
-    const pdfPath = path.resolve(__dirname, '../', process.env.EBOOK_PDF_PATH || './ebooks/nas-garras-de-beth-mirage.pdf')
+    // Try multiple paths for different environments (Vercel, local, etc.)
+    const possiblePaths = [
+      path.resolve(process.cwd(), 'public/media/ebook.pdf'),
+      path.resolve(process.cwd(), 'media/ebook.pdf'),
+      path.resolve(__dirname, '../', process.env.EBOOK_PDF_PATH || './ebooks/nas-garras-de-beth-mirage.pdf'),
+      path.resolve(__dirname, '../../media/ebook.pdf')
+    ]
     
-    if (!fs.existsSync(pdfPath)) {
-      throw new Error(`PDF file not found at: ${pdfPath}`)
+    let pdfPath = null
+    for (const possiblePath of possiblePaths) {
+      if (fs.existsSync(possiblePath)) {
+        pdfPath = possiblePath
+        break
+      }
+    }
+    
+    if (!pdfPath) {
+      throw new Error(`PDF file not found. Tried paths: ${possiblePaths.join(', ')}`)
     }
 
     const pdfContent = fs.readFileSync(pdfPath)
