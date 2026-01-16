@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { sendEbookEmail, sendStoryConfirmation } from './services/brevoService.js'
-import { subscribeUser, saveStory } from './services/database.js'
+import { saveStory } from './services/database.js'
 
 dotenv.config()
 
@@ -58,6 +58,8 @@ app.post('/api/subscribe', async (req, res) => {
       })
     }
 
+    console.log('name', name)
+
     if (!consent) {
       return res.status(400).json({
         success: false,
@@ -74,6 +76,8 @@ app.post('/api/subscribe', async (req, res) => {
       })
     }
 
+    console.log('email', email)
+
     // Validate phone format (basic validation)
     const phoneRegex = /^[\d\s\(\)\-\+]{10,}$/
     if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
@@ -83,8 +87,7 @@ app.post('/api/subscribe', async (req, res) => {
       })
     }
 
-    // Save to database (optional - implement your database logic)
-    await subscribeUser({ name, email, phone, consent })
+    console.log('phone', phone)
 
     // Send e-book via Brevo
     await sendEbookEmail({ name, email, phone })

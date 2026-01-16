@@ -1,7 +1,6 @@
 // Vercel Serverless Function for /api/subscribe
 import dotenv from 'dotenv'
 import { sendEbookEmail } from '../server/services/brevoService.js'
-import { subscribeUser } from '../server/services/database.js'
 
 // Load environment variables
 dotenv.config()
@@ -51,9 +50,6 @@ export default async function handler(req, res) {
         message: 'Telefone inválido'
       })
     }
-
-    // Save to database (optional - implement your database logic)
-    await subscribeUser({ name, email, phone, consent })
 
     // Send e-book via Brevo
     await sendEbookEmail({ name, email, phone })
